@@ -1,0 +1,105 @@
+
+
+
+
+header {
+    max-height: 10% !important;
+}
+
+header .container-fluid .row .logo-div {
+    flex: 20%;
+    max-width: 10%;
+    text-align: center;
+    /*border-right: 1px solid var(--white);*/ 
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .container-fluid .row .nav-main {
+    max-width: 80%;
+    flex: 80%;
+    text-align: center;
+}
+
+header .container-fluid .row .nav-main ul {
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+   
+}
+
+header .container-fluid .row .nav-main ul li {
+    padding: 0 15px;
+}
+
+header .container-fluid .row .logo-div h3 {
+    margin: 0;
+}
+
+header .container-fluid .row {
+    /*border: 1px solid var(--white);*/
+    align-items: center;
+    margin: 0;
+}
+
+header .container-fluid .row>div {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .container-fluid .row .nav-main ul {
+    min-height: 100px;
+    align-items: center;
+    border-left: 1px solid var(--white);
+    border-right: 1px solid var(--white);
+}
+
+
+header .container-fluid .row .nav-main ul a {
+    color: #0b81c1;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+    /* font-family: var(--head-font); */
+}
+
+
+.active-link {
+    text-decoration: underline overline blue ;
+  }
+
+  button {
+    width: 40%;
+    height: 4%;
+    background-color: #05b64f;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #056a11;
+    color: white;
+}
+
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: darkgrey;
+    color: #fff;
+    padding: 10px;
+    cursor: not-allowed;
+}
+
+button:hover:enabled {
+    background-color: #056a11;
+    color: white;
+}
