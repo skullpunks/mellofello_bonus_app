@@ -109,7 +109,7 @@
 							<img src="/green.png" style="width: 20%; height: 20%; align-items: center; display: block;
             margin-left: auto;
             margin-right: auto;" alt="indexx logo" />
-							<figcaption style=" color: #05b64f; font-size:100px; font-style: italic;" }}>indexx Crypto
+							<figcaption style=" color: #05b64f; font-size:100px; font-style: italic;" }}>indexx Crypto(INXC)
 							</figcaption>
 						</figure>
 						<div>
@@ -144,7 +144,7 @@
 								<div>
 									<button id="step2" disabled onclick="verifyOpenseaProof()">
 										<h3>
-											VERIFY YOUR PROOF OF TRADE
+											VERIFY TRADE
 										</h3>
 									</button>
 								</div>
@@ -153,9 +153,9 @@
 						<div class="div.step3">
 							<h1><strong> <u style="color: #05b64f">Step 3</u></strong></h3>
 								<div>
-									<button id="step3" disabled onclick="initiateClaim()">
+									<button id="step3"  onclick="initiateClaim()">
 										<h3>
-											INITIATE YOUR CLAIM
+											CLAIM
 										</h3>
 									</button>
 								</div>
@@ -165,7 +165,7 @@
 									<div>
 										<button id="step4" disabled onclick="addToken()">
 											<h3>
-												ADD INDEXX CRYPTO TO METAMASK
+												ADD INXC TO METAMASK
 											</h3>
 										</button>
 									</div>
@@ -1682,7 +1682,7 @@
 					alert("Mint successfully, wait for 5 seconds to reload");
 				})
 				.on('receipt', function (receipt) {
-					alert("You have got bonus Indexx Crypto. Click on Add Indexx Crypto to Metamask button to see your tokens")
+					alert("You have got bonus Indexx Crypto. Click on Step 4 to see your tokens")
 					document.getElementById("step4").disabled = false;
 				})
 				.on('error', function (error, receipt) {
