@@ -15,7 +15,7 @@
 	<meta name="description" content="">
 
 
-	<title>Home</title>
+	<title>MelloFello Bonus Page</title>
 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
@@ -209,8 +209,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.0.2/package/lib/browser/fs.min.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+<script src="updateJSON.js"></script> -->
 
 <script>
+	
 
 	//IC contract tokenABI
 	const tokenABI = [
@@ -1510,9 +1515,8 @@
 			"type": "function"
 		}
 	];*/
-
 	const tokenAddress = "0xfb3972B79E4727Bc77d18B58d42836959acC2f39";
-
+	let sum = 0;
 	async function loadWeb3() {
 		if (window.ethereum) {
 			window.web3 = new Web3(window.ethereum);
@@ -1566,22 +1570,62 @@
 
 	//verify trades on open
 	async function verifyOpenseaProof() {
-		url = "https://api.opensea.io/api/v1/events"
-		query = {
-			"only_opensea": "false",
-			"occurred_before": end_date,
-			"occurred_after": start_date,
-			"event_type": event_type,
-			"cursor": cursor,
+		// var url = "https://api.opensea.io/api/v1/events"
+		// var query = {
+		// 	"only_opensea": "false",
+		// 	"occurred_before": end_date,
+		// 	"occurred_after": start_date,
+		// 	"event_type": event_type,
+		// 	"cursor": cursor,
+		// }
+
+		// headers = {
+		// 	"Accept": "application/json",
+		// 	"X-API-KEY": OPENSEA_APIKEY
+		// }
+
+		const userWalletAddress = await getCurrentAccount();
+
+		const options = {
+			method: 'GET',
+			//url: `https://testnets-api.opensea.io/api/v1/events?asset_contract_address=${tokenAddress}&account_address=${userWalletAddress}&only_opensea=false`,
+			// url: `https://testnets-api.opensea.io/api/v1/events?asset_contract_address=${userWalletAddress}&event_type=successful&only_opensea=false`,
+			url: 'https://testnets-api.opensea.io/api/v1/events?asset_contract_address=0xfB7e002151343efA2a3A5f2EA98Db0D21efB75Ce&event_type=successful&only_opensea=false&limit=20',
+			headers: { Accept: 'application/json' }
+		};
+
+		const getcall = await axios.request(options);
+
+
+		let userAssetEvents = getcall.data.asset_events;
+		console.log('response', userAssetEvents)
+
+		if (userAssetEvents.length > 0) {
+			for (let i = 0; i < userAssetEvents.length; i++) {
+				if (userAssetEvents[i].quantity && userAssetEvents[i].quantity > 0) {
+					let userEntry = {
+						id: userAssetEvents[i].id,
+						quantity: userAssetEvents[i].quantity,
+						userWalletAddress: userWalletAddress
+					}
+					updateJSON(userEntry)
+					// fs.writeFile(fileName, JSON.stringify(userEntry), function writeJSON(err) {
+					// 	if (err) return console.log(err);
+					// 	console.log(JSON.stringify(file));
+					// 	console.log('writing to ' + fileName);
+					// });
+					sum += Number(userAssetEvents[i].quantity);
+				}
+			}
+			console.log('sum', sum)
 		}
 
-		headers = {
-			"Accept": "application/json",
-			"X-API-KEY": OPENSEA_APIKEY
+		if (sum > 0) {
+			document.getElementById("step3").disabled = false;
+		} else {
+			alert("Sorry! You are not eligible for Indexx 500 bonus claim. Please trade or buy some NFTs on Opensea.")
 		}
-		response = requests.request("GET", url, headers = headers, params = query)
 	}
-
 
 	async function loadTokenContract() {
 		try {
@@ -1612,8 +1656,7 @@
 			);
 
 
-			const indexxPrivateKey = ''
-			//'0xe8ab253620a32feff72f702a6120c0e74e87578dc5585f719694b1f3d645815c'//process.env.privateKey;
+			const indexxPrivateKey = process.env.privateKey;
 
 			// Connecting to the signer and adding to the wallet
 			const signerObj = web3.eth.accounts.privateKeyToAccount(indexxPrivateKey);
