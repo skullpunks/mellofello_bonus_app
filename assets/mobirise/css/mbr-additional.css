@@ -918,6 +918,7 @@ a {
   transition: all .3s;
   word-break: break-word;
   z-index: 1;
+  margin: auto;
 }
 .cid-s48OLK6784 .navbar-brand .navbar-caption {
   line-height: inherit !important;
